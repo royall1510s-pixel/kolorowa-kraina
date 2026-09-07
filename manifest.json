@@ -1,0 +1,18 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Kolorowa Kraina",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Kolorowa Kraina",
+  "start_url": "/",
+  "theme_color": "#6c4dff",
+  "id": "kolorowa-kraina",
+  "description": "Wesoła gra edukacyjna dla dzieci do nauki i zapamiętywania kolorów.",
+  "lang": "pl",
+  "categories": [
+    "games",
+    "kids"
+  ]
+}
