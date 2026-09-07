@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#6c5ce7">
+<title>Kolorowa Kraina 🎨</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(145deg,#fff7d6,#e5f7ff 55%,#eee5ff);color:#24233a;overflow-x:hidden}
+button{font:inherit;border:0;cursor:pointer}
+.app{max-width:760px;min-height:100vh;margin:auto;padding:14px 15px 22px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:950;font-size:20px;background:#fff;padding:9px 13px;border-radius:18px;box-shadow:0 5px 18px #0001}
+.icon{background:#fff;border-radius:16px;padding:9px 13px;font-size:20px;box-shadow:0 5px 18px #0001}
+.screen{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;text-align:center}.screen.active{display:flex}
+.mascot{width:130px;height:130px;margin:8px auto;animation:float 2.3s ease-in-out infinite}
+h1{font-size:clamp(42px,12vw,70px);line-height:.95;margin:5px 0;font-weight:1000;letter-spacing:-3px}
+h2{font-size:clamp(29px,8vw,46px);margin:7px 0 14px}.sub{font-size:19px;max-width:560px;line-height:1.45}
+.primary{background:#6c5ce7;color:#fff;padding:17px 28px;border-radius:22px;font-weight:950;font-size:21px;box-shadow:0 7px 0 #4d40b3;transition:.12s}.primary:active{transform:translateY(5px);box-shadow:0 2px 0 #4d40b3}
+.secondary{background:#fff;padding:12px 18px;border-radius:17px;font-weight:850;box-shadow:0 5px 18px #0001}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,620px);margin:17px 0}.mode{background:#fff;padding:15px 10px;border-radius:19px;font-weight:900;box-shadow:0 5px 16px #0001}.mode.selected{background:#6c5ce7;color:#fff}
+.stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0 12px}.pill{background:#fff;padding:9px 12px;border-radius:15px;font-weight:900;box-shadow:0 5px 15px #0001}
+.target{width:min(100%,650px);background:#fff;border-radius:27px;padding:15px 18px;box-shadow:0 10px 30px #0001}.target small{font-weight:800;opacity:.55}.target strong{display:block;font-size:clamp(28px,8vw,45px);margin-top:2px}
+.progress{width:min(100%,650px);height:10px;background:#ffffffaa;border-radius:20px;overflow:hidden;margin:12px 0}.progress i{display:block;width:0;height:100%;background:#6c5ce7;transition:.3s}
+.grid{width:min(100%,650px);display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}.color{aspect-ratio:1;border-radius:24px;box-shadow:0 8px 0 #0002,0 12px 24px #0002;transition:.12s}.color:active{transform:scale(.92) translateY(4px)}.color.ok{animation:ok .55s}.color.bad{animation:bad .4s}
+.memory{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(100%,600px)}.card{aspect-ratio:1;border-radius:20px;background:#6c5ce7;color:#fff;font-size:35px;font-weight:900;box-shadow:0 7px 0 #4d40b3}.card.reveal{background:#fff;color:#222;box-shadow:0 6px 18px #0002}.card.done{opacity:.5}
+.sequence{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:15px 0;min-height:70px}.dot{width:62px;height:62px;border-radius:18px;box-shadow:0 5px 14px #0002}.sequenceBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(100%,620px)}
+.feedback{min-height:28px;font-weight:850}.best{opacity:.65}.menu{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@keyframes float{50%{transform:translateY(-9px) rotate(2deg)}}@keyframes ok{50%{transform:scale(1.1) rotate(4deg);filter:brightness(1.2)}}@keyframes bad{25%,75%{transform:translateX(-7px)}}
+@media(max-width:430px){.grid{gap:9px}.color{border-radius:19px}.app{padding:10px}.mascot{width:110px;height:110px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand">🌈 Kolorowa Kraina</div><button class="icon" id="sound">🔊</button></header>
+
+<section class="screen active" id="home">
+<svg class="mascot" viewBox="0 0 140 140"><circle cx="70" cy="70" r="60" fill="#FFD34E"/><circle cx="48" cy="60" r="7"/><circle cx="92" cy="60" r="7"/><path d="M45 83 Q70 105 95 83" fill="none" stroke="#333" stroke-width="7" stroke-linecap="round"/><circle cx="25" cy="76" r="8" fill="#ff9aa2"/><circle cx="115" cy="76" r="8" fill="#ff9aa2"/></svg>
+<h1>Kolory!</h1><p class="sub">Mała, wesoła gra, w której uczymy się kolorów poprzez zabawę.</p>
+<div class="modes">
+<button class="mode selected" data-mode="find">🎯 Znajdź kolor</button>
+<button class="mode" data-mode="name">🧠 Jaki to kolor?</button>
+<button class="mode" data-mode="memory">🃏 Pamięć</button>
+<button class="mode" data-mode="sequence">🌈 Kolejność</button>
+</div>
+<button class="primary" id="start">▶ ZACZYNAMY!</button>
+<p class="best">🏆 Najlepszy wynik: <b id="best">0</b></p>
+</section>
+
+<section class="screen" id="game">
+<div class="stats"><div class="pill">⭐ <span id="score">0</span></div><div class="pill">🔥 <span id="combo">0</span></div><div class="pill">🎯 <span id="round">1</span>/<span id="total">12</span></div><div class="pill" id="lives">❤️❤️❤️</div></div>
+<div class="target"><small id="instruction">ZNAJDŹ</small><strong id="question"></strong></div>
+<div class="progress"><i id="bar"></i></div>
+<div id="area"></div><p class="feedback" id="feedback"></p>
+<button class="secondary" id="quit">🏠 MENU</button>
+</section>
+
+<section class="screen" id="result">
+<svg class="mascot" viewBox="0 0 140 140"><circle cx="70" cy="70" r="60" fill="#8BE28B"/><circle cx="48" cy="60" r="7"/><circle cx="92" cy="60" r="7"/><path d="M42 82 Q70 110 98 82" fill="none" stroke="#333" stroke-width="7" stroke-linecap="round"/><path d="M42 43l10-10M98 43l-10-10" stroke="#333" stroke-width="6" stroke-linecap="round"/></svg>
+<h2>Koniec gry! 🎉</h2><div id="stars" style="font-size:42px">⭐⭐⭐</div><div style="font-size:72px;font-weight:1000" id="final">0</div><p>punktów</p><p id="summary"></p><div class="menu"><button class="primary" id="again">🔄 JESZCZE RAZ</button><button class="secondary" id="menu">🏠 MENU</button></div>
+</section>
+</div>
+<script>
+const C=[
+["czerwony","#ef4444"],["niebieski","#3b82f6"],["zielony","#22c55e"],["żółty","#facc15"],["pomarańczowy","#f97316"],["fioletowy","#8b5cf6"],["różowy","#ec4899"],["turkusowy","#14b8a6"],["brązowy","#92400e"]
+];
+let mode="find",score=0,round=1,lives=3,combo=0,target=null,locked=false,sound=true,total=12,best=+localStorage.getItem("krBest")||0;
+const $=x=>document.getElementById(x);$("best").textContent=best;
+const screens={home:$("home"),game:$("game"),result:$("result")};
+function show(x){Object.values(screens).forEach(s=>s.classList.remove("active"));screens[x].classList.add("active")}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function speak(t){if(!sound||!window.speechSynthesis)return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="pl-PL";u.rate=.88;u.pitch=1.12;speechSynthesis.speak(u)}
+function tone(ok=true){if(!sound)return;try{let a=new AudioContext(),o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.value=ok?650:180;g.gain.value=.07;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+(ok?.16:.22))}catch(e){}}
+function start(){score=0;round=1;lives=3;combo=0;locked=false;$("score").textContent=0;$("combo").textContent=0;show("game");next()}
+function pick(){return C[Math.floor(Math.random()*C.length)]}
+function renderLives(){$("lives").textContent="❤️".repeat(lives)+"🖤".repeat(3-lives)}
+function addPoints(){let p=10+Math.min(combo,5)*2;if(mode==="hard")p+=5;score+=p;combo++;$("score").textContent=score;$("combo").textContent=combo}
+function wrong(){lives--;combo=0;$("combo").textContent=0;renderLives();tone(false);$("feedback").textContent="💪 Spróbuj jeszcze raz!";speak("Spróbuj jeszcze raz");if(lives<=0){locked=true;setTimeout(finish,500)}}
+function next(){if(round>total){finish();return}locked=false;$("round").textContent=round;$("bar").style.width=((round-1)/total*100)+"%";$("feedback").textContent="";renderLives(); if(mode==="find")find();if(mode==="name")nameGame();if(mode==="memory")memory();if(mode==="sequence")sequence()}
+function buttons(colors,fn){$("area").innerHTML="";let g=document.createElement("div");g.className="grid";colors.forEach(c=>{let b=document.createElement("button");b.className="color";b.style.background=c[1];b.onclick=()=>fn(b,c);g.appendChild(b)});$("area").appendChild(g)}
+function find(){ $("instruction").textContent="ZNAJDŹ KOLOR";target=pick();$("question").textContent=target[0].toUpperCase();let cs=shuffle([target,...shuffle(C.filter(x=>x!==target)).slice(0,5)]);speak("Znajdź kolor "+target[0]);buttons(cs,(b,c)=>{if(locked)return;if(c===target){locked=true;b.classList.add("ok");tone();addPoints();$("feedback").textContent="🎉 Brawo!";speak("Brawo!");setTimeout(()=>{round++;next()},500)}else{b.classList.add("bad");wrong()}})}
+function nameGame(){ $("instruction").textContent="JAKI TO KOLOR?";target=pick();$("question").textContent="❓";let cs=shuffle([target,...shuffle(C.filter(x=>x!==target)).slice(0,5)]);buttons(cs,(b,c)=>{if(locked)return;if(c===target){locked=true;b.classList.add("ok");tone();addPoints();$("feedback").textContent="🌟 Zgadłeś! To "+target[0]+".";speak("Zgadłeś!");setTimeout(()=>{round++;next()},500)}else{b.classList.add("bad");wrong()}});$("area").querySelectorAll(".color").forEach((b,i)=>{let c=cs[i];b.innerHTML="";});let targetBtn=[...$("area").querySelectorAll(".color")].find(b=>b.style.background===target[1]); /* color is visual clue */ 
+// hide clue by making all colors identical? Name mode should show colored circles, asking name is intended.
+}
+function memory(){ $("instruction").textContent="ZAPAMIĘTAJ";$("question").textContent="Odsłoń pary";let colors=shuffle(C.slice(0,6));let deck=shuffle([...colors,...colors]);let area=document.createElement("div");area.className="memory";$("area").innerHTML="";$("area").appendChild(area);let first=null,busy=false,matches=0;deck.forEach(c=>{let b=document.createElement("button");b.className="card";b.textContent="❔";b.dataset.color=c[0];b.onclick=()=>{if(busy||b.classList.contains("done")||b===first)return;b.classList.add("reveal");b.textContent="●";b.style.color=c[1];if(!first){first=b;return}busy=true;if(first.dataset.color===b.dataset.color){first.classList.add("done");b.classList.add("done");matches++;addPoints();tone();first=null;busy=false;if(matches===6)setTimeout(()=>{round++;next()},550)}else{combo=0;$("combo").textContent=0;tone(false);setTimeout(()=>{first.classList.remove("reveal");b.classList.remove("reveal");first.textContent=b.textContent="❔";first=null;busy=false},650)}};area.appendChild(b)});speak("Znajdź pasujące pary")}
+function sequence(){ $("instruction").textContent="ZAPAMIĘTAJ KOLEJNOŚĆ";let len=round<4?3:round<8?4:5;let seq=Array.from({length:len},pick);$("question").textContent="👀 Patrz!";let area=document.createElement("div");area.className="sequence";$("area").innerHTML="";$("area").appendChild(area);seq.forEach(c=>{let d=document.createElement("div");d.className="dot";d.style.background=c[1];area.appendChild(d)});speak("Zapamiętaj kolejność");setTimeout(()=>{area.innerHTML="";$("question").textContent="TERAZ KLIKNIJ KOLEJNO";let chosen=[];let choices=shuffle([...new Set(seq)]);let g=document.createElement("div");g.className="sequenceBtns";choices.forEach(c=>{let b=document.createElement("button");b.className="color";b.style.background=c[1];b.onclick=()=>{if(locked)return;let i=chosen.length;if(c!==seq[i]){wrong();chosen=[];if(lives>0){setTimeout(()=>sequence(),600)}return}chosen.push(c);b.style.opacity=".45";tone();if(chosen.length===seq.length){locked=true;addPoints();$("feedback").textContent="🌈 Perfekcyjnie!";speak("Perfekcyjnie!");setTimeout(()=>{round++;next()},550)}};g.appendChild(b)});$("area").appendChild(g)},900)}
+function finish(){if(score>best){best=score;localStorage.setItem("krBest",best)}$("best").textContent=best;$("final").textContent=score;$("stars").textContent=score>=140?"⭐⭐⭐":score>=70?"⭐⭐":"⭐";$("summary").textContent=score>=140?"Niesamowity wynik! Jesteś mistrzem kolorów!":score>=70?"Super! Jeszcze trochę i będzie perfekcyjnie!":"Brawo za zabawę! Spróbuj jeszcze raz pobić rekord.";show("result");speak("Koniec gry! Twój wynik to "+score+" punktów")}
+document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll(".mode").forEach(x=>x.classList.remove("selected"));b.classList.add("selected")});
+$("start").onclick=start;$("again").onclick=start;$("menu").onclick=()=>show("home");$("quit").onclick=()=>show("home");
+$("sound").onclick=()=>{sound=!sound;$("sound").textContent=sound?"🔊":"🔇"};
+</script>
+</body></html>
